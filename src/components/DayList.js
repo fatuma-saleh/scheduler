@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import DayListItem from "components/DayListItem.js";
 
 export default function DayList(props) {
-  console.log("+++",props)
   const { days, day, setDay } = props;
   const listItem = days.map((curentDay) => {
     return (
@@ -14,10 +13,8 @@ export default function DayList(props) {
         selected={curentDay.name === day}
         setDay={setDay}
       />
-
     )
   })
-
 
   return (
     <ul>
