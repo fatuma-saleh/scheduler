@@ -53,8 +53,15 @@ const appointments = {
 
 export default function Application(props) {
 
-  const [day, setDay] = useState("Monday");
-  const [days, setDays] = useState([]);
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    //appointments: {}
+  });
+  //copy the previous state and changing the day
+  const setDay = day => setState(pre => ({ ...pre, day }));
+  const setDays = days => setState(pre => ({ ...pre, days }));
+
   const appointmentArray = Object.values(appointments).map((appointment) => {
 
     return (
@@ -84,8 +91,8 @@ export default function Application(props) {
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
           <DayList
-            days={days}
-            value={day}
+            days={state.days}
+            value={state.day}
             onChange={setDay}
           />
         </nav>
