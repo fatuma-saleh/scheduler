@@ -56,6 +56,7 @@ export default function Form(props) {
       {/* <Button danger onClick={props.onCancel} >Cancel</Button> */}
       <Button danger onClick={cancel} >Cancel</Button>
       {/* <Button confirm onClick={props.onSave}>Save</Button> */}
+      {/* <Button confirm onClick={()=>props.onSave(student,interviewer)}>Save</Button> */}
       <Button confirm onClick={()=>props.onSave(student,interviewer)}>Save</Button>
     </section>
   </section>
