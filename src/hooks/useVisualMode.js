@@ -1,6 +1,3 @@
-// export function useVisualMode(initial){
-// return {mode:initial}
-// }
 import { useState } from "react";
 
 export default function useVisualMode(initial) {
