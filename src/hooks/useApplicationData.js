@@ -25,10 +25,17 @@ export default function useApplicationData() {
 
   }, []);
 
+  function updateFunction(){
+    axios.get(`http://localhost:8001/api/days`)
+    .then((res) =>{
+      setState(prev => ({ ...prev, days: res.data}))
+    })
+  }
+
   function bookInterview(id, interview) {
     //  const appointment = state.appointments[id]
     //  appointment.interview = interview
-
+  
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -41,13 +48,15 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-
+    console.log("state",state)
     return axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
       .then((res) => {
+    
         setState({
           ...state,
           appointments
         });
+        updateFunction();
 
         return res
       })
@@ -72,6 +81,7 @@ export default function useApplicationData() {
           appointments
         });
 
+        updateFunction();
         return res
       })
   }
