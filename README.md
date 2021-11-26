@@ -11,10 +11,10 @@ Scheduler is a single-page application (SPA) that allows users to book technical
 - `npm start` 
 ## Running Jest Test Framework
 
--`npm test` 
+- `npm test` 
 ## Running Storybook Visual Testbed
 
-`npm run storybook`
+- `npm run storybook`
 
 ## Final Product
 
