@@ -25,33 +25,28 @@ export default function useApplicationData() {
 
   }, []);
 
-  function updateSpots(){
+  function updateSpots() {
     axios.get(`/api/days`)
-    .then((res) =>{
-      setState(prev => ({ ...prev, days: res.data}))
-    })
+      .then((res) => {
+        setState(prev => ({ ...prev, days: res.data }))
+      })
   }
 
   function bookInterview(id, interview) {
-    //  const appointment = state.appointments[id]
-    //  appointment.interview = interview
-  
+
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
     };
 
-    // const appointments = states.appointments
-    // appointments[id] = appointment
-
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
-    console.log("state",state)
+
     return axios.put(`/api/appointments/${id}`, { interview })
       .then((res) => {
-    
+
         setState({
           ...state,
           appointments
@@ -61,6 +56,7 @@ export default function useApplicationData() {
         return res
       })
   }
+
 
   function cancelInterview(id) {
 

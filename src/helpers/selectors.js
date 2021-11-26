@@ -1,4 +1,3 @@
-
 export function getAppointmentsForDay(state, dayName) {
 
   for (const day of state.days) {
@@ -16,6 +15,7 @@ export function getAppointmentsForDay(state, dayName) {
 }
 
 export function getInterview(state, interview) {
+
   if (!interview) {
     return null;
   }
