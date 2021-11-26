@@ -8,13 +8,13 @@ Scheduler is a single-page application (SPA) that allows users to book technical
  - The client(scheduler) runs on port 8000, and the API server runs on port 8001.
 ## Running Webpack Development Server for the scheduler 
 
-- run `npm start` 
+- `npm start` 
 ## Running Jest Test Framework
 
-- run `npm test` 
+-`npm test` 
 ## Running Storybook Visual Testbed
 
-run `npm run storybook`
+`npm run storybook`
 
 ## Final Product
 
