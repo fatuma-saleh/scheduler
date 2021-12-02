@@ -47,7 +47,7 @@ export default function Appointment(props) {
 
    return (
       <>
-         <article className="appointment">
+         <article className="appointment" data-testid="appointment">
             <Header time={props.time} />
             {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
             {mode === SHOW && (
@@ -57,6 +57,7 @@ export default function Appointment(props) {
                   onDelete={() => transition(CONFIRM)}
                   id={props.id}
                   onEdit={() => transition(EDIT)}
+                  
                />
             )}
             {mode === CREATE && <Form interviewers={props.interviewers} onCancel={() => back()} onSave={save} />}
@@ -66,7 +67,7 @@ export default function Appointment(props) {
             {mode === EDIT && <Form interviewers={props.interviewers} interviewer={props.interview.interviewer.id} student={props.interview.student} onCancel={() => back()} onSave={save} />}
             {mode === ERROR_SAVE && <Error message={"Can not save appointment"} onClose={back} />}
             {mode === ERROR_DELETE && <Error message={"Can not cancel appointment"} onClose={back} />}
-
+            
          </article>
       </>
    );
