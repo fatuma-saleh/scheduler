@@ -29,6 +29,7 @@ export default function useApplicationData() {
     axios.get(`/api/days`)
       .then((res) => {
         setState(prev => ({ ...prev, days: res.data }))
+        console.log("update",res.data)
       })
   }
 
@@ -43,6 +44,7 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
+    
 
     return axios.put(`/api/appointments/${id}`, { interview })
       .then((res) => {
