@@ -11,6 +11,7 @@
     "react-scripts": "3.0.0"
   },
   "scripts": {
+    "cypress":"cypress open -p .",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -41,6 +42,7 @@
     "@testing-library/react": "^8.0.7",
     "@testing-library/react-hooks": "^7.0.2",
     "babel-loader": "^8.0.5",
+    "cypress": "^9.1.1",
     "node-sass": "^4.14.0",
     "prop-types": "^15.7.2",
     "react-test-renderer": "^16.14.0"
