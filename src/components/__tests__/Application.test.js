@@ -1,5 +1,5 @@
 import React, { useDebugValue } from "react";
-import axios from "axios";
+import axios from 'axios'
 
 import {
   render,
@@ -16,47 +16,54 @@ import {
 
 import Application from "components/Application";
 
-import "../../__mocks__/axios.js";
-import Appointment from "components/Appointment/index.js";
-
 afterEach(cleanup);
 
 describe("Application", () => {
-  it("defaults to Monday and changes the schedule when a new day is selected", () => {
-    const { getByText } = render(<Application />);
 
-    return waitForElement(() => getByText("Monday")).then(() => {
-      fireEvent.click(getByText("Tuesday"));
-      expect(getByText("Leopold Silvers")).toBeInTheDocument();
-    });
+  beforeEach(() => {
+    jest.clearAllMocks();
+});
+
+afterEach(cleanup)
+
+
+it('defaults to Monday and changes the schedule when a new day is selected', async () => {
+  const { getByText } = render(<Application />)
+
+  await waitForElement(() => getByText('Monday'))
+
+  fireEvent.click(getByText('Tuesday'))
+
+  expect(getByText('Leopold Silvers')).toBeInTheDocument()
+})
+
+it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
+  const { container } = render(<Application />);
+  await waitForElement(() => getByText(container, "Archie Cohen"));
+
+  const appointments = getAllByTestId(container, "appointment");
+
+  const appointment = appointments[0];
+
+  fireEvent.click(getByAltText(appointment, "Add"));
+
+  fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
+    target: { value: "Lydia Miller-Jones" },
   });
+  fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
 
-  it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
-    const { container, debug } = render(<Application />);
-    await waitForElement(() => getByText(container, "Archie Cohen"));
+  fireEvent.click(getByText(appointment, "Save"));
 
-    const appointments = getAllByTestId(container, "appointment");
+  expect(getByText(appointment, "SAVING")).toBeInTheDocument();
 
-    const appointment = appointments[0];
+  await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
 
-    fireEvent.click(getByAltText(appointment, "Add"));
+  const day = getAllByTestId(container, "day").find((day) =>
+    queryByText(day, "Monday")
+  );
+  expect(getByText(day, "no spots remaining")).toBeInTheDocument();
+});
 
-    fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
-      target: { value: "Lydia Miller-Jones" },
-    });
-    fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
-
-    fireEvent.click(getByText(appointment, "Save"));
-
-    expect(getByText(appointment, "SAVING")).toBeInTheDocument();
-
-    await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
-
-    const day = getAllByTestId(container, "day").find((day) =>
-      queryByText(day, "Monday")
-    );
-    expect(getByText(day, "no spots remaining")).toBeInTheDocument();
-  });
 
   it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
     // 1. Render the Application.
@@ -85,15 +92,16 @@ describe("Application", () => {
 
     // 7. Wait until the element with the "Add" button is displayed.
     await waitForElement(() => getByAltText(appointment, "Add"));
-
+    debug(container)
+    debug(appointment)
     // 8. Check that the DayListItem with the text "Monday" also has the text "2 spots remaining".
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday")
     );
-
+    // await waitForElement(() => getByText(day,"2 spots remaining"))
     expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
-    console.log(prettyDOM(appointment))
   });
+  
 
   it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
     const { container, debug } = render(<Application />);
