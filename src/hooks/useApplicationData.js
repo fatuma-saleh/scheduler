@@ -67,7 +67,7 @@ export default function useApplicationData() {
     }
     days[dayIndex] = { ...day };
     const newState = {...state}
-    setState({ ...newState, days });
+    setState((pre)=>({...pre, days}) );
     //return days;
   }
 
@@ -118,12 +118,12 @@ export default function useApplicationData() {
 
     return axios.delete(`/api/appointments/${id}`).then((res) => {
       updateSpots();
-      setState({
-        ...state,
+      setState((prev)=> ({
+        ...prev,
         appointments,
         // days,
-      });
-
+      }));
+    
       // updateSpots();
       //updateSpots(state, appointments);
       return res;
