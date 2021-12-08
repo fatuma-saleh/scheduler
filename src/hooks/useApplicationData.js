@@ -26,58 +26,20 @@ export default function useApplicationData() {
     });
   }, []);
 
-  function updateSpots2(state, appointments) {
-    // axios.get(`/api/days`)
-    //   .then((res) => {
-    //     setState(prev => ({ ...prev, days: res.data }))
-    //     // console.log("update",res.data)
-    //   })
-
-    const newDays = [...state.days];
-    const dayObj = newDays.find((day) => day.name === state.day);
-    let spots = 0;
-    for (const id of dayObj.appointments) {
-      const appointment = appointments[id];
-      if (!appointment.interview) {
-        spots++;
-      }
-    }
-    console.log(spots);
-    const newDay = { ...dayObj, spots };
-    const newDaysArr = newDays.map((day) =>
-      day.name === state.day ? newDay : day
-    );
-    // return newDaysArr;
-    console.log("states,", state);
-    console.log("array", newDaysArr);
-
-    // setState({...state, days:newDaysArr})
-  }
-
   function updateSpots(requestType) {
     const days = [...state.days];
     const dayIndex = days.findIndex((day) => day.name === state.day);
     const day = days[dayIndex];
     if (requestType === "bookAppointment") {
       day.spots -= 1;
-      // days[dayIndex].spots -= 1;
     } else {
       day.spots += 1;
-      // days[dayIndex].spots += 1;
     }
     days[dayIndex] = { ...day };
-    const newState = {...state}
-    setState((pre)=>({...pre, days}) );
-    //return days;
+    setState((pre) => ({ ...pre, days }));
   }
 
-  //console.log("appointments-----", state.appointments);
   function bookInterview(id, interview) {
-    // const appointment = {
-    //   ...state.appointments[id],
-    //   interview: { ...interview },
-    // };
-
     const appointment = { ...state.appointments[id] };
 
     const create = appointment.interview ? false : true;
@@ -95,11 +57,7 @@ export default function useApplicationData() {
       setState({
         ...state,
         appointments,
-        // days,
       });
-
-      //updateSpots();
-      // updateSpots(state, appointments);
 
       return res;
     });
@@ -118,14 +76,11 @@ export default function useApplicationData() {
 
     return axios.delete(`/api/appointments/${id}`).then((res) => {
       updateSpots();
-      setState((prev)=> ({
+      setState((prev) => ({
         ...prev,
         appointments,
-        // days,
       }));
-    
-      // updateSpots();
-      //updateSpots(state, appointments);
+
       return res;
     });
   }
